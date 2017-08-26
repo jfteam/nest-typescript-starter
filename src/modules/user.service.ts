@@ -22,12 +22,13 @@ export class UserService implements OnModuleInit, OnModuleDestroy {
     ];
 
     async getUsers() {
-        //return Promise.resolve(this.users);
         return Promise.resolve(this.userRepository.getUsers());
     }
 
-    getUser(id: number) {
-        const user = this.users.find((item) => item.id === id);
+    async getUser(id: number) {
+        //const user = this.users.find((item) => item.id === id);
+        const user = this.userRepository.getUser(id);
+        console.log(JSON.stringify(user));
         if (!user) {
             throw new HttpException("(未找到)=>服务器找不到请求的数据", HttpStatus.NOT_FOUND);
         }

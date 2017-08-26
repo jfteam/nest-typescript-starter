@@ -1,13 +1,15 @@
 import Sequelize = require('sequelize');
 import { DBConfig } from "../db.config";
+import { Component } from "@nestjs/common";
 
+@Component()
 export class UserRepository {
     
     private sequelize:Sequelize;
 
     constructor(private dbConfig:DBConfig) {
-        this.sequelize = new Sequelize(dbConfig.host, dbConfig.username, dbConfig.password, {
-            host: dbConfig.database,
+        this.sequelize = new Sequelize('test', 'root', '123456', {
+            host: 'localhost',
             dialect: 'mysql',
             pool: {
                 max: 5,
@@ -22,10 +24,9 @@ export class UserRepository {
         });
     }
 
-    getUser(id:number){
-        this.sequelize.query("select * from demo where id= " + id, { type: Sequelize.QueryTypes.SELECT }).then((results)=>{
-            Promise.resolve(results);
-        })
+    async getUser(id: number) {
+        const user = await this.sequelize.query("select * from demo where id = ?", { replacements: [id], type: Sequelize.QueryTypes.SELECT });
+        return Promise.resolve(user);
     }
 
     async getUsers() {
