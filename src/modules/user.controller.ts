@@ -8,18 +8,24 @@ export class UserController {
     constructor(private userService: UserService) { }
 
     @Get()
-    public async getUsers( @Response() res) {
-        const users = this.userService.getUsers();
-        users.then((users) => res.status(HttpStatus.OK).json(users));
+    async getUsers( @Response() res) {
+        const users = await this.userService.getUsers();
+        res.status(HttpStatus.OK).json(users);
     }
 
     @Get("/:id")
-    getUser( @Response() res, @Param("id") id) {
-        this.userService.getUser(+id).then((user) => res.status(HttpStatus.OK).json(user));
+    async getUser( @Response() res, @Param("id") id) {
+        const user = await this.userService.getUser(+id);
+        res.status(HttpStatus.OK).json(user);
     }
 
     @Post()
-    createUser( @Request() req, @Response() res, @Body("user") user) {
-        this.userService.createUser(req.Body.user).then((msg) => res.status(HttpStatus.CREATED).join(msg));
+    async createUser( @Request() req, @Response() res, @Body() user) {
+        if (user != null) {
+            console.log(user);
+            const msg = await this.userService.createUser(user);
+            return res.status(HttpStatus.CREATED).json(msg);
+        }
+        return res.status(HttpStatus.BAD_REQUEST).json('please input user info.');
     }
 }
