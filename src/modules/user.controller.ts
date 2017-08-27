@@ -1,7 +1,7 @@
 
 import { Controller, Post, Get, Param, Response, Request, Next, Body, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Demo } from "./user.model";
+import { UserModel } from "./user.model";
 
 @Controller("users")
 export class UserController {
@@ -27,7 +27,7 @@ export class UserController {
     }
 
     @Post()
-    async createUser( @Request() req, @Response() res, @Body() user: Demo) {
+    async createUser( @Request() req, @Response() res, @Body() user: UserModel) {
         if (user != null) {
             console.log(user);
             const msg = await this.userService.createUser(user);

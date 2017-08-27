@@ -1,4 +1,6 @@
 
+import { Component } from "@nestjs/common";
+
 export class DBConfig {
     private static _host: string = "localhost:3306";
     private static _port: number = 3306;

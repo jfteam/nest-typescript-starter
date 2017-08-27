@@ -8,7 +8,7 @@ import { DBConfig } from "../db.config";
 
 @Module({
     controllers: [UserController],
-    components: [UserService, UserRepository, DBConfig],
+    components: [UserService, UserRepository],
     exports: [UserService]
 })
 export class UserModule {

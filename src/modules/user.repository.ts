@@ -1,7 +1,6 @@
 import { Sequelize, Model } from 'sequelize-typescript';
-import { DBConfig } from "../db.config";
 import { Component } from "@nestjs/common";
-import { Demo } from "./user.model";
+import { UserModel } from "./user.model";
 
 @Component()
 export class UserRepository {
@@ -10,7 +9,7 @@ export class UserRepository {
 
     constructor() {
         this.sequelize = new Sequelize({
-            host: 'localhost',
+            host: "localhost",
             port: 3306,
             dialect: 'mysql',
             username: 'root',
@@ -25,7 +24,7 @@ export class UserRepository {
         });
         this.sequelize.authenticate().then(() => {
             console.log('Connection has been established successfully.');
-            this.sequelize.addModels([Demo]);
+            this.sequelize.addModels([UserModel]);
         }).catch(err => {
             console.error('Unable to connect to the database:', err);
         });
@@ -33,12 +32,12 @@ export class UserRepository {
 
     async getUser(id: number) {
         //const user = await this.sequelize.query("select * from demo where id = ?", { replacements: [id], type: Sequelize.QueryTypes.SELECT });
-        return await Demo.findById(id);
+        return await UserModel.findById(id);
     }
 
-    async getUsers(): Promise<Demo[]> {
+    async getUsers(): Promise<Model<UserModel>[]> {
         //const users = await this.sequelize.query("select * from demo", { type: Sequelize.QueryTypes.SELECT });
-        const users = await Demo.findAll({
+        const users = await UserModel.findAll({
             where: {
                 id: {
                     gte: 500
@@ -49,11 +48,11 @@ export class UserRepository {
     }
 
     async getAllUsers() {
-        return await Demo.findAll();
+        return await UserModel.findAll();
     }
 
-    async createUser(user: Demo) {
-        const demo = await Demo.build<Demo>({ id: user.id, name: user.name, createdTime: new Date() });
+    async createUser(user: UserModel) {
+        const demo = await UserModel.build<UserModel>({ id: user.id, name: user.name, createdTime: new Date() });
         demo.save();
     }
 }

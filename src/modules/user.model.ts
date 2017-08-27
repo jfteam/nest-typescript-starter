@@ -1,14 +1,18 @@
 import { Model, Table, Column, CreatedAt } from "sequelize-typescript";
 
-@Table
-export class Demo extends Model<Demo>{
+@Table({
+    tableName: 'demo'
+})
+export class UserModel extends Model<UserModel>{
     @Column({
         primaryKey: true
     })
     id: number;
 
-    @Column
-    name:string;
+    @Column({
+        field: 'name'
+    })
+    name: string;
 
     @Column({
         field: 'create_time'

@@ -2,7 +2,8 @@
 import { Component, HttpStatus, OnModuleInit, OnModuleDestroy } from "@nestjs/common";
 import { HttpException } from "@nestjs/core";
 import { UserRepository } from "./user.repository";
-import { Demo } from "./user.model";
+import { UserModel } from "./user.model";
+import { Model } from "sequelize-typescript";
 
 @Component()
 export class UserService implements OnModuleInit, OnModuleDestroy {
@@ -22,7 +23,7 @@ export class UserService implements OnModuleInit, OnModuleDestroy {
         { id: 400, name: "fengwp" }
     ];
 
-    async getUsers(): Promise<Demo[]> {
+    async getUsers(): Promise<Model<UserModel>[]> {
         return await this.userRepository.getUsers();
     }
 
@@ -40,7 +41,7 @@ export class UserService implements OnModuleInit, OnModuleDestroy {
         return Promise.resolve(users);
     }
 
-    createUser(user:Demo) {
+    createUser(user:UserModel) {
         //this.users.push(user);
         this.userRepository.createUser(user);
         return Promise.resolve();
