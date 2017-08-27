@@ -1,29 +1,28 @@
 
 export class DBConfig {
-    private _host: string = "localhost:3306";
-    private _username: string = "root";
-    private _password: string = "123456";
-    private _database: string = "demo";
+    private static _host: string = "localhost:3306";
+    private static _port: number = 3306;
+    private static _username: string = "root";
+    private static _password: string = "123456";
+    private static _database: string = "demo";
 
-    public get host(): string {
+    public static host(): string {
         return this._host;
     }
-    public set host(v: string) {
-        this._host = v;
+
+    public static port(): number {
+        return this._port;
     }
-    public get username(): string {
+
+    public static username(): string {
         return this._username;
     }
-    public set username(v: string) {
-        this._username = v;
-    }
-    public get password(): string {
+
+    public static password(): string {
         return this._password;
     }
-    public set database(v: string) {
-        this._database = v;
-    }
-    public get database(): string {
+
+    public static database(): string {
         return this._database;
     }
 }

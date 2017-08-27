@@ -1,6 +1,7 @@
 
 import { Controller, Post, Get, Param, Response, Request, Next, Body, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
+import { Demo } from "./user.model";
 
 @Controller("users")
 export class UserController {
@@ -13,6 +14,12 @@ export class UserController {
         res.status(HttpStatus.OK).json(users);
     }
 
+    @Get("/all")
+    async getAllUsers(@Response() res){
+        const users = await this.userService.getAllUsers();
+        res.status(HttpStatus.OK).json(users);
+    }
+
     @Get("/:id")
     async getUser( @Response() res, @Param("id") id) {
         const user = await this.userService.getUser(+id);
@@ -20,7 +27,7 @@ export class UserController {
     }
 
     @Post()
-    async createUser( @Request() req, @Response() res, @Body() user) {
+    async createUser( @Request() req, @Response() res, @Body() user: Demo) {
         if (user != null) {
             console.log(user);
             const msg = await this.userService.createUser(user);
