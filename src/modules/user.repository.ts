@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize, Model } from 'sequelize-typescript';
 import { DBConfig } from "../db.config";
 import { Component } from "@nestjs/common";
 import { Demo } from "./user.model";
@@ -16,7 +16,7 @@ export class UserRepository {
             username: 'root',
             password: '123456',
             name: 'test',
-            logging: false,
+            logging: true,//是否打印sql语句等日志
             pool: {
                 max: 5,
                 min: 0,
@@ -25,10 +25,10 @@ export class UserRepository {
         });
         this.sequelize.authenticate().then(() => {
             console.log('Connection has been established successfully.');
+            this.sequelize.addModels([Demo]);
         }).catch(err => {
             console.error('Unable to connect to the database:', err);
         });
-        this.sequelize.addModels([Demo]);
     }
 
     async getUser(id: number) {
@@ -36,17 +36,24 @@ export class UserRepository {
         return await Demo.findById(id);
     }
 
-    async getUsers() {
-        const users = await this.sequelize.query("select * from demo", { type: Sequelize.QueryTypes.SELECT });
-        return Promise.resolve(users);
+    async getUsers(): Promise<Demo[]> {
+        //const users = await this.sequelize.query("select * from demo", { type: Sequelize.QueryTypes.SELECT });
+        const users = await Demo.findAll({
+            where: {
+                id: {
+                    gte: 500
+                }
+            }
+        });
+        return users;
     }
 
     async getAllUsers() {
         return await Demo.findAll();
     }
 
-    createUser(user: Demo) {
-        const demo = Demo.build<Demo>({ id: user.id, name: user.name, createdTime: new Date() });
+    async createUser(user: Demo) {
+        const demo = await Demo.build<Demo>({ id: user.id, name: user.name, createdTime: new Date() });
         demo.save();
     }
 }

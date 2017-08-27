@@ -22,8 +22,8 @@ export class UserService implements OnModuleInit, OnModuleDestroy {
         { id: 400, name: "fengwp" }
     ];
 
-    async getUsers() {
-        return Promise.resolve(this.userRepository.getUsers());
+    async getUsers(): Promise<Demo[]> {
+        return await this.userRepository.getUsers();
     }
 
     async getUser(id: number) {
