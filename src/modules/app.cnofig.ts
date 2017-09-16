@@ -1,7 +1,7 @@
-
 import { Component } from "@nestjs/common";
 
-export class DBConfig {
+@Component()
+export class AppConfig{
     private static _host: string = "localhost:3306";
     private static _port: number = 3306;
     private static _username: string = "root";

@@ -1,7 +1,7 @@
 import { Sequelize, Model } from 'sequelize-typescript';
 import { Component } from "@nestjs/common";
-import { UserModel } from "./user.model";
-import { MysqlConnectionManager } from "./mysql/mysql.connection.manager";
+import { MysqlConnectionManager } from "../../mysql/mysql.connection.manager";
+import { UserModel } from "./model/user.model";
 
 @Component()
 export class UserRepository {

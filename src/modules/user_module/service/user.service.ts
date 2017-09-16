@@ -1,9 +1,9 @@
 
 import { Component, HttpStatus, OnModuleInit, OnModuleDestroy } from "@nestjs/common";
 import { HttpException } from "@nestjs/core";
-import { UserRepository } from "./user.repository";
-import { UserModel } from "./user.model";
 import { Model } from "sequelize-typescript";
+import { UserRepository } from "../domain/user.repository";
+import { UserModel } from "../domain/model/user.model";
 
 @Component()
 export class UserService implements OnModuleInit, OnModuleDestroy {
